@@ -1,0 +1,20 @@
+{
+  "scorer_id": "rules-logreg-v1",
+  "fit_on": "dev",
+  "n_examples": 40,
+  "epochs": 4000,
+  "lr": 0.35,
+  "l2": 0.01,
+  "bias": -2.827417,
+  "weights": {
+    "grounding": 0.539643,
+    "commit_language": 0.698201,
+    "hedge_language": -1.779136,
+    "conditional": -2.238907,
+    "retraction": -1.000529,
+    "assignee_resolved": 0.744585,
+    "temporal_anchor": 2.216703,
+    "speaker_is_assignee": 1.452815,
+    "vague_title": -0.311562
+  }
+}

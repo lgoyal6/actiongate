@@ -1,0 +1,300 @@
+[
+  {
+    "payload": {
+      "id": "test_kestrel_impl",
+      "name": "Kestrel Foods implementation call",
+      "createdAt": "2026-07-22T15:00:00.000Z",
+      "duration": 1655.3,
+      "url": "https://meet.google.com/kes-1234-imp",
+      "recordingUrl": null,
+      "tags": ["Implementation"],
+      "icalUid": "tst1a2b@google.com",
+      "attendees": [
+        { "name": "Omar Haddad", "email": "omar@kestrel.example" },
+        { "name": "Julia Moreau", "email": "julia@acme.example" }
+      ],
+      "notes": "#### Overview\n*   Staging environment and historical data import are the first steps.\n*   SSO is a customer-side question.",
+      "actionItems": [
+        { "id": 1101, "title": "Configure the staging environment", "description": "Configure the staging environment for Kestrel Foods.", "assignee": { "name": "Julia Moreau", "email": "julia@acme.example" }, "status": "PENDING" },
+        { "id": 1102, "title": "Import historical order data", "description": "Import Kestrel's historical order data into the platform.", "assignee": { "name": "Julia Moreau", "email": "julia@acme.example" }, "status": "PENDING" },
+        { "id": 1103, "title": "Investigate a Shopify connector", "description": "Investigate building a Shopify connector.", "assignee": null, "status": "PENDING" },
+        { "id": 1104, "title": "Send the implementation timeline", "description": "Send Kestrel the implementation timeline.", "assignee": { "name": "Julia Moreau", "email": "julia@acme.example" }, "status": "PENDING" },
+        { "id": 1105, "title": "Set up Okta single sign-on", "description": "Set up Okta single sign-on for the Kestrel workspace.", "assignee": { "name": "Omar Haddad", "email": "omar@kestrel.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Omar Haddad", "text": "We want to be live before the autumn ordering season, so the sooner we can click around the better.", "timestamp": 9.1 },
+        { "speaker": "Julia Moreau", "text": "I'll configure the staging environment for you tomorrow.", "timestamp": 31.5 },
+        { "speaker": "Omar Haddad", "text": "We have about four years of order history sitting in the old system.", "timestamp": 58.8 },
+        { "speaker": "Julia Moreau", "text": "I am going to import your historical order data once you send the dump, and I'll have it done Thursday.", "timestamp": 74.2 },
+        { "speaker": "Omar Haddad", "text": "We might want a Shopify connector someday, just thinking out loud there.", "timestamp": 108.6 },
+        { "speaker": "Omar Haddad", "text": "What does the overall schedule look like? My board asks weekly.", "timestamp": 136.9 },
+        { "speaker": "Julia Moreau", "text": "Implementation timeline lands in your inbox this afternoon.", "timestamp": 150.4 },
+        { "speaker": "Julia Moreau", "text": "Somebody should set up Okta SSO on your side, maybe Omar can take a look eventually.", "timestamp": 178.7 },
+        { "speaker": "Omar Haddad", "text": "Our IT group owns that, I would have to ask them.", "timestamp": 198.2 }
+      ],
+      "insights": {}
+    },
+    "labels": { "1101": 1, "1102": 1, "1103": 0, "1104": 1, "1105": 0 },
+    "hard": [1102, 1104, 1105]
+  },
+  {
+    "payload": {
+      "id": "test_halcyon_risk",
+      "name": "Halcyon Media renewal risk",
+      "createdAt": "2026-07-23T18:00:00.000Z",
+      "duration": 1320.9,
+      "url": "https://zoom.us/j/5556667778",
+      "recordingUrl": null,
+      "tags": ["Renewal", "At risk"],
+      "icalUid": "tst2a2b@google.com",
+      "attendees": [
+        { "name": "Beatriz Souza", "email": "bea@halcyon.example" },
+        { "name": "Dan Osei", "email": "dan@acme.example" }
+      ],
+      "notes": "#### Overview\n*   Reporting bugs are the main renewal risk.\n*   Discount requires finance approval.",
+      "actionItems": [
+        { "id": 1201, "title": "Prepare a churn mitigation plan", "description": "Prepare a churn mitigation plan for Halcyon Media.", "assignee": { "name": "Dan Osei", "email": "dan@acme.example" }, "status": "PENDING" },
+        { "id": 1202, "title": "Escalate the reporting bugs to engineering", "description": "Escalate the Halcyon reporting bugs to the engineering team.", "assignee": { "name": "Dan Osei", "email": "dan@acme.example" }, "status": "PENDING" },
+        { "id": 1203, "title": "Offer a 15% renewal discount", "description": "Offer Halcyon fifteen percent off the renewal.", "assignee": { "name": "Dan Osei", "email": "dan@acme.example" }, "status": "PENDING" },
+        { "id": 1204, "title": "Switch to the annual plan", "description": "Switch Halcyon from monthly to the annual plan.", "assignee": { "name": "Beatriz Souza", "email": "bea@halcyon.example" }, "status": "PENDING" },
+        { "id": 1205, "title": "Add Halcyon to the analytics beta", "description": "Enrol Halcyon Media in the analytics beta programme.", "assignee": { "name": "Dan Osei", "email": "dan@acme.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Beatriz Souza", "text": "I will be honest, my team has lost patience with the reporting module.", "timestamp": 7.8 },
+        { "speaker": "Dan Osei", "text": "That is fair. I'll prepare a churn mitigation plan and walk you through it next week.", "timestamp": 26.3 },
+        { "speaker": "Dan Osei", "text": "I'll escalate the reporting bugs to engineering today, they should not have sat this long.", "timestamp": 52.1 },
+        { "speaker": "Dan Osei", "text": "And I'll offer you fifteen percent off the renewal for the trouble.", "timestamp": 88.4 },
+        { "speaker": "Dan Osei", "text": "Let me walk that back, I need finance to approve any discount first, I should not have said a number.", "timestamp": 99.7 },
+        { "speaker": "Beatriz Souza", "text": "Understood. If the reporting gets fixed we would consider switching to the annual plan.", "timestamp": 128.5 },
+        { "speaker": "Dan Osei", "text": "That would help both of us. Let me get the engineering fix moving first.", "timestamp": 160.2 }
+      ],
+      "insights": {}
+    },
+    "labels": { "1201": 1, "1202": 1, "1203": 0, "1204": 0, "1205": 0 },
+    "hard": [1203, 1205]
+  },
+  {
+    "payload": {
+      "id": "test_pinewood_security",
+      "name": "Pinewood School District security review",
+      "createdAt": "2026-07-27T14:30:00.000Z",
+      "duration": 1490.2,
+      "url": "https://teams.microsoft.com/l/meetup-join/pwd",
+      "recordingUrl": null,
+      "tags": ["Security review", "Education"],
+      "icalUid": "tst3a2b@google.com",
+      "attendees": [
+        { "name": "Alan Petrov", "email": "alan@pinewood.example" },
+        { "name": "Sam Whitfield", "email": "sam@acme.example" }
+      ],
+      "notes": "#### Overview\n*   FERPA documentation requested.\n*   District rollout depends on board approval.",
+      "actionItems": [
+        { "id": 1301, "title": "Send the FERPA compliance summary", "description": "Send Pinewood the FERPA compliance summary.", "assignee": { "name": "Sam Whitfield", "email": "sam@acme.example" }, "status": "PENDING" },
+        { "id": 1302, "title": "Provide a list of subprocessors", "description": "Provide Pinewood with the current list of subprocessors.", "assignee": { "name": "Sam Whitfield", "email": "sam@acme.example" }, "status": "PENDING" },
+        { "id": 1303, "title": "Enable student data anonymization", "description": "Enable anonymization of student data.", "assignee": null, "status": "PENDING" },
+        { "id": 1304, "title": "Run a district-wide rollout in the fall", "description": "Roll the platform out across the district in the fall.", "assignee": { "name": "Alan Petrov", "email": "alan@pinewood.example" }, "status": "PENDING" },
+        { "id": 1305, "title": "Schedule training for the IT staff", "description": "Book training sessions for the Pinewood IT staff.", "assignee": { "name": "Alan Petrov", "email": "alan@pinewood.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Alan Petrov", "text": "Anything touching student records goes through a heavier review here than a normal purchase.", "timestamp": 12.3 },
+        { "speaker": "Sam Whitfield", "text": "I'll send the FERPA compliance summary over this week.", "timestamp": 34.7 },
+        { "speaker": "Alan Petrov", "text": "The other thing our counsel always asks is who else touches the data.", "timestamp": 66.1 },
+        { "speaker": "Sam Whitfield", "text": "Let me pull together the list of subprocessors for you.", "timestamp": 80.5 },
+        { "speaker": "Alan Petrov", "text": "Student data anonymization would be nice to have, it is not required by our policy.", "timestamp": 112.8 },
+        { "speaker": "Alan Petrov", "text": "Assuming the board signs off we would run a district wide rollout in the fall.", "timestamp": 145.2 },
+        { "speaker": "Alan Petrov", "text": "IT staff training, I am booking that for the last week of August regardless.", "timestamp": 172.6 },
+        { "speaker": "Sam Whitfield", "text": "Good, that de-risks the timeline if the board moves quickly.", "timestamp": 196.0 }
+      ],
+      "insights": {}
+    },
+    "labels": { "1301": 1, "1302": 1, "1303": 0, "1304": 0, "1305": 1 },
+    "hard": [1305]
+  },
+  {
+    "payload": {
+      "id": "test_q3_forecast",
+      "name": "Q3 forecast",
+      "createdAt": "2026-07-28T17:00:00.000Z",
+      "duration": 1105.4,
+      "url": null,
+      "recordingUrl": null,
+      "tags": ["Internal"],
+      "icalUid": null,
+      "attendees": [
+        { "name": "Nina Brooks", "email": "nina@acme.example" },
+        { "name": "Dan Osei", "email": "dan@acme.example" },
+        { "name": "Julia Moreau", "email": "julia@acme.example" }
+      ],
+      "notes": "#### Overview\n*   Halcyon moving to at-risk.\n*   Kestrel quote going out today.",
+      "actionItems": [
+        { "id": 1401, "title": "Update the forecast spreadsheet", "description": "Update the Q3 forecast spreadsheet after this call.", "assignee": { "name": "Nina Brooks", "email": "nina@acme.example" }, "status": "PENDING" },
+        { "id": 1402, "title": "Rebuild the lead scoring model", "description": "Rebuild the lead scoring model.", "assignee": null, "status": "PENDING" },
+        { "id": 1403, "title": "Send Kestrel the revised quote", "description": "Send the revised quote to Kestrel Foods.", "assignee": { "name": "Julia Moreau", "email": "julia@acme.example" }, "status": "PENDING" },
+        { "id": 1404, "title": "Sync", "description": "Sync.", "assignee": null, "status": "PENDING" },
+        { "id": 1405, "title": "Move Halcyon to at-risk in the CRM", "description": "Change the Halcyon account status to at-risk in the CRM.", "assignee": { "name": "Dan Osei", "email": "dan@acme.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Nina Brooks", "text": "Numbers first, then the accounts I am worried about.", "timestamp": 8.7 },
+        { "speaker": "Nina Brooks", "text": "I'll update the forecast spreadsheet after this call so everyone is looking at the same version.", "timestamp": 24.1 },
+        { "speaker": "Julia Moreau", "text": "We could rebuild the lead scoring model at some point, I am kicking the idea around, nothing concrete.", "timestamp": 57.6 },
+        { "speaker": "Julia Moreau", "text": "On Kestrel, revised quote goes out by end of day.", "timestamp": 92.0 },
+        { "speaker": "Dan Osei", "text": "Halcyon moves to at risk in the CRM this afternoon, I am doing it myself.", "timestamp": 124.4 },
+        { "speaker": "Nina Brooks", "text": "Agreed, better to flag it now than explain it later.", "timestamp": 150.9 }
+      ],
+      "insights": {}
+    },
+    "labels": { "1401": 1, "1402": 0, "1403": 1, "1404": 0, "1405": 1 },
+    "hard": [1405]
+  },
+  {
+    "payload": {
+      "id": "test_vantage_discovery",
+      "name": "Vantage Logistics discovery",
+      "createdAt": "2026-07-29T16:00:00.000Z",
+      "duration": 1388.1,
+      "url": "https://meet.google.com/van-5678-log",
+      "recordingUrl": null,
+      "tags": ["Discovery"],
+      "icalUid": "tst5a2b@google.com",
+      "attendees": [
+        { "name": "Ken Doyle", "email": "ken@vantage.example" },
+        { "name": "Julia Moreau", "email": "julia@acme.example" }
+      ],
+      "notes": "#### Overview\n*   Vantage is locked into an incumbent contract for now.\n*   ROI model and a reference call requested.",
+      "actionItems": [
+        { "id": 1501, "title": "Send the ROI model", "description": "Send Vantage Logistics the ROI model.", "assignee": { "name": "Julia Moreau", "email": "julia@acme.example" }, "status": "PENDING" },
+        { "id": 1502, "title": "Arrange a reference call", "description": "Arrange a reference call with an existing logistics customer.", "assignee": { "name": "Julia Moreau", "email": "julia@acme.example" }, "status": "PENDING" },
+        { "id": 1503, "title": "Evaluate the route optimization add-on", "description": "Evaluate the route optimization add-on.", "assignee": { "name": "Ken Doyle", "email": "ken@vantage.example" }, "status": "PENDING" },
+        { "id": 1504, "title": "Run a two-week pilot", "description": "Run a two week pilot with the Vantage operations team.", "assignee": null, "status": "PENDING" },
+        { "id": 1505, "title": "Share the integration API docs", "description": "Share the integration API documentation with Vantage.", "assignee": { "name": "Julia Moreau", "email": "julia@acme.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Ken Doyle", "text": "I will be straight with you, we are eleven months into a three year contract with someone else.", "timestamp": 10.5 },
+        { "speaker": "Julia Moreau", "text": "Then let us use the time well. I'll send you our ROI model by Wednesday so you can build the internal case.", "timestamp": 33.9 },
+        { "speaker": "Ken Doyle", "text": "Hearing from a peer would carry more weight than a spreadsheet, honestly.", "timestamp": 68.2 },
+        { "speaker": "Julia Moreau", "text": "Let me arrange a reference call with one of our logistics customers.", "timestamp": 82.7 },
+        { "speaker": "Ken Doyle", "text": "We might evaluate the route optimization add on, we are early on that.", "timestamp": 114.3 },
+        { "speaker": "Ken Doyle", "text": "Once we finish the current vendor contract we could run a two week pilot with operations.", "timestamp": 146.8 },
+        { "speaker": "Ken Doyle", "text": "My integration lead will ask about the API before any of that.", "timestamp": 174.1 },
+        { "speaker": "Julia Moreau", "text": "Integration API docs, I am sending those tonight.", "timestamp": 188.6 }
+      ],
+      "insights": {}
+    },
+    "labels": { "1501": 1, "1502": 1, "1503": 0, "1504": 0, "1505": 1 },
+    "hard": [1505]
+  },
+  {
+    "payload": {
+      "id": "test_kestrel_sync_failures",
+      "name": "Support: Kestrel data sync failures",
+      "createdAt": "2026-08-03T19:45:00.000Z",
+      "duration": 1042.7,
+      "url": "https://zoom.us/j/4443332221",
+      "recordingUrl": null,
+      "tags": ["Support"],
+      "icalUid": "tst6a2b@google.com",
+      "attendees": [
+        { "name": "Omar Haddad", "email": "omar@kestrel.example" },
+        { "name": "Raj Patel", "email": "raj@acme.example" }
+      ],
+      "notes": "#### Overview\n*   Nightly sync failing intermittently.\n*   Batch size change deferred pending diagnosis.",
+      "actionItems": [
+        { "id": 1601, "title": "Investigate the nightly sync failures", "description": "Investigate why the nightly data sync is failing for Kestrel.", "assignee": { "name": "Raj Patel", "email": "raj@acme.example" }, "status": "PENDING" },
+        { "id": 1602, "title": "Increase the sync batch size", "description": "Increase the batch size used by the nightly sync.", "assignee": { "name": "Raj Patel", "email": "raj@acme.example" }, "status": "PENDING" },
+        { "id": 1603, "title": "Send a written RCA", "description": "Send Kestrel a written root cause analysis.", "assignee": { "name": "Raj Patel", "email": "raj@acme.example" }, "status": "PENDING" },
+        { "id": 1604, "title": "Build a sync status dashboard", "description": "Build a dashboard showing sync status.", "assignee": null, "status": "PENDING" },
+        { "id": 1605, "title": "Waive next month's invoice", "description": "Waive the Kestrel invoice for next month.", "assignee": { "name": "Raj Patel", "email": "raj@acme.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Omar Haddad", "text": "Three of the last five nights the sync did not complete, and nobody told us.", "timestamp": 6.9 },
+        { "speaker": "Raj Patel", "text": "I'll investigate the nightly sync failures and report back tomorrow.", "timestamp": 27.4 },
+        { "speaker": "Raj Patel", "text": "I'll increase the sync batch size for you as a quick mitigation.", "timestamp": 49.8 },
+        { "speaker": "Raj Patel", "text": "On second thought, hold off, a larger batch could make the timeouts worse before we know the cause.", "timestamp": 61.2 },
+        { "speaker": "Omar Haddad", "text": "Our operations lead will want a proper write up, not a chat message.", "timestamp": 90.6 },
+        { "speaker": "Raj Patel", "text": "You'll have a written RCA from me by Friday.", "timestamp": 104.0 },
+        { "speaker": "Omar Haddad", "text": "A sync status dashboard would be nice to have down the road too.", "timestamp": 132.5 },
+        { "speaker": "Raj Patel", "text": "If this turns out to be our bug we'll waive next month's invoice.", "timestamp": 158.9 }
+      ],
+      "insights": {}
+    },
+    "labels": { "1601": 1, "1602": 0, "1603": 1, "1604": 0, "1605": 0 },
+    "hard": [1602]
+  },
+  {
+    "payload": {
+      "id": "test_atlas_eval",
+      "name": "Atlas Robotics technical evaluation",
+      "createdAt": "2026-08-05T15:30:00.000Z",
+      "duration": 1912.4,
+      "url": "https://meet.google.com/atl-9012-rob",
+      "recordingUrl": null,
+      "tags": ["Evaluation"],
+      "icalUid": "tst7a2b@google.com",
+      "attendees": [
+        { "name": "Wen Li", "email": "wen@atlasrobotics.example" },
+        { "name": "Raj Patel", "email": "raj@acme.example" }
+      ],
+      "notes": "#### Overview\n*   Streaming API performance is the deciding factor.\n*   On-premise deployment depends on procurement.",
+      "actionItems": [
+        { "id": 1701, "title": "Send benchmark results for the streaming API", "description": "Send Atlas the benchmark results for the streaming API.", "assignee": { "name": "Raj Patel", "email": "raj@acme.example" }, "status": "PENDING" },
+        { "id": 1702, "title": "Set up a shared Slack channel", "description": "Set up a shared Slack channel with the Atlas team.", "assignee": { "name": "Raj Patel", "email": "raj@acme.example" }, "status": "PENDING" },
+        { "id": 1703, "title": "Test the on-premise deployment", "description": "Test the on-premise deployment in the Atlas environment.", "assignee": { "name": "Wen Li", "email": "wen@atlasrobotics.example" }, "status": "PENDING" },
+        { "id": 1704, "title": "Add gRPC support", "description": "Add gRPC support to the streaming API.", "assignee": null, "status": "PENDING" },
+        { "id": 1705, "title": "Review the architecture diagram with the team", "description": "Review the architecture diagram with the Atlas engineering team.", "assignee": { "name": "Wen Li", "email": "wen@atlasrobotics.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Wen Li", "text": "Our decision comes down to whether the streaming path holds up under our message rates.", "timestamp": 11.2 },
+        { "speaker": "Raj Patel", "text": "I'll send you benchmark results for the streaming API by Thursday, including the p99 numbers you asked about.", "timestamp": 35.8 },
+        { "speaker": "Wen Li", "text": "Email is going to be slow for the back and forth we are about to have.", "timestamp": 70.4 },
+        { "speaker": "Raj Patel", "text": "Let me set up a shared Slack channel for us today.", "timestamp": 84.9 },
+        { "speaker": "Wen Li", "text": "If procurement approves we would test the on premise deployment next.", "timestamp": 118.3 },
+        { "speaker": "Wen Li", "text": "gRPC support would be nice to have, potentially, but there is no commitment on our side.", "timestamp": 150.7 },
+        { "speaker": "Wen Li", "text": "Architecture diagram review with my team, that is happening Monday, I am scheduling it.", "timestamp": 182.1 },
+        { "speaker": "Raj Patel", "text": "Send me the questions that come out of it and I will answer them in the channel.", "timestamp": 205.6 }
+      ],
+      "insights": {}
+    },
+    "labels": { "1701": 1, "1702": 1, "1703": 0, "1704": 0, "1705": 1 },
+    "hard": [1705]
+  },
+  {
+    "payload": {
+      "id": "test_northwind_expansion",
+      "name": "Northwind expansion exec sync",
+      "createdAt": "2026-08-10T16:00:00.000Z",
+      "duration": 1288.0,
+      "url": "https://meet.google.com/nwd-3456-exp",
+      "recordingUrl": null,
+      "tags": ["Expansion"],
+      "icalUid": "tst8a2b@google.com",
+      "attendees": [
+        { "name": "Priya Raman", "email": "priya@northwind.example" },
+        { "name": "Nina Brooks", "email": "nina@acme.example" }
+      ],
+      "notes": "#### Overview\n*   500-seat proposal requested.\n*   EMEA expansion depends on the pilot.",
+      "actionItems": [
+        { "id": 1801, "title": "Deliver a 500-seat proposal", "description": "Deliver a five hundred seat proposal to Northwind.", "assignee": { "name": "Nina Brooks", "email": "nina@acme.example" }, "status": "PENDING" },
+        { "id": 1802, "title": "Expand to the EMEA teams", "description": "Expand the deployment to the Northwind EMEA teams.", "assignee": { "name": "Priya Raman", "email": "priya@northwind.example" }, "status": "PENDING" },
+        { "id": 1803, "title": "Introduce the procurement contacts", "description": "Introduce Nina to the Northwind procurement contacts.", "assignee": { "name": "Priya Raman", "email": "priya@northwind.example" }, "status": "PENDING" },
+        { "id": 1804, "title": "Add SCIM provisioning to the roadmap", "description": "Add SCIM provisioning to the product roadmap.", "assignee": { "name": "Nina Brooks", "email": "nina@acme.example" }, "status": "PENDING" },
+        { "id": 1805, "title": "Send the multi-year discount schedule", "description": "Send Northwind the multi-year discount schedule.", "assignee": { "name": "Nina Brooks", "email": "nina@acme.example" }, "status": "PENDING" }
+      ],
+      "transcript": [
+        { "speaker": "Priya Raman", "text": "The pilot has gone well enough that I am ready to talk about the whole company.", "timestamp": 9.4 },
+        { "speaker": "Nina Brooks", "text": "I'll deliver a five hundred seat proposal to you by the end of next week.", "timestamp": 28.8 },
+        { "speaker": "Priya Raman", "text": "If the pilot keeps going well we would expand to the EMEA teams after that.", "timestamp": 62.2 },
+        { "speaker": "Priya Raman", "text": "I'll introduce you to our procurement contacts tomorrow, they will want a head start.", "timestamp": 95.7 },
+        { "speaker": "Nina Brooks", "text": "Helpful. On your SCIM question, SCIM provisioning might make the roadmap, I cannot promise timing.", "timestamp": 128.1 },
+        { "speaker": "Priya Raman", "text": "Fair. What about pricing over a longer term?", "timestamp": 158.5 },
+        { "speaker": "Nina Brooks", "text": "Multi year discount schedule, your inbox, Friday.", "timestamp": 172.9 }
+      ],
+      "insights": {
+        "Expansion signals": [
+          { "insight": "500-seat company-wide proposal requested", "speaker": "Priya Raman", "timestamp": 9.4 }
+        ]
+      }
+    },
+    "labels": { "1801": 1, "1802": 0, "1803": 1, "1804": 0, "1805": 1 },
+    "hard": [1805]
+  }
+]

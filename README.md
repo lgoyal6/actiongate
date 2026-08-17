@@ -9,6 +9,55 @@ confident ones, and route the rest to a human. The premise is that a wrong actio
 item in a customer record is more expensive than a missing one, so the system
 should gate on confidence rather than write everything it extracts.
 
+---
+
+## The short version
+
+**What I noticed.** Circleback's automations write extracted action items straight into
+HubSpot, Salesforce, Attio or monday.com. An LLM reading a transcript will confidently
+produce an action item from someone hedging, from a conditional that never fired, or from
+something a speaker retracted a minute later. Once that lands in a customer record, someone
+acts on a commitment nobody made. A missing action item is annoying; an invented one is a
+wrong conversation with a customer. Those costs are not symmetric, and writing everything you
+extract treats them as if they were.
+
+**What I built.** A receiver that scores each item on whether it is grounded in the
+transcript and whether the speaker actually committed, auto-commits above a threshold, and
+queues the rest for a person. Every decision lands in an append-only hash-chained audit log
+with a verifier.
+
+**What I found**, on a held-out split of 8 meetings and 40 action items:
+
+| | wrong writes into the CRM | real items auto-committed | precision |
+|---|---:|---:|---:|
+| commit everything | **18 of 40** | 22 of 22 | 0.550 |
+| gate at 0.65 | **2 of 40** | 19 of 22 | 0.905 |
+
+**Writing everything puts 18 wrong action items into the CRM. The gate cuts that to 2 while
+still auto-committing 19 of the 22 genuine ones.** You give up 3 auto-commits, which become
+review-queue rows rather than lost work, and remove 89% of the damage.
+
+**The threshold is derived, not guessed.** It minimises `20 x (wrong writes) + reviews` on
+the dev split, encoding that a bad write costs roughly twenty times a queue row. It lands on
+0.65 and stays there for every cost ratio from 5 to 100, so it does not need retuning per
+customer.
+
+**A bug I found in your docs while building this.** Your published sample verifier hashes
+`JSON.stringify(req.body)` rather than the raw request bytes. Re-serializing a parsed body
+does not reproduce the original text whenever a number carried a trailing zero, a key order
+differed, or a unicode escape was used. **It rejects 5 of the 7 legitimately signed payloads
+in `probe_docs_verifier.js`, including one carrying the `800.00` from Circleback's own
+example.** Anyone who copied that verifier is silently dropping valid webhooks. Stripe and
+GitHub both document the raw-body requirement for the same reason.
+
+**What it is not.** The corpus is 16 hand-written synthetic meetings, so the accuracy numbers
+describe this scorer on this corpus and nothing about Circleback's own extraction quality. I
+have no account and sent no request to your infrastructure. Two held-out false positives are
+reported unfixed, because I found them by reading the test split and patching against it
+would have invalidated every number above.
+
+---
+
 Built against Circleback's published webhook schema, read 2026-08-14 at
 `https://support.circleback.ai/en/articles/11014015-export-meeting-data-with-webhooks`.
 Field names (`actionItems[].title`, `.assignee`, `transcript[].speaker`, ...) are

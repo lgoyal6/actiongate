@@ -1,0 +1,24 @@
+Licences for the files in this directory
+=======================================
+
+The code in this repository is MIT (see ../LICENSE). The labeled corpus is
+licensed separately, so it can be reused as an evaluation set without taking on
+a code licence.
+
+dev.json
+test.json
+--------
+Creative Commons Attribution 4.0 International (CC BY 4.0).
+Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+  "actiongate action-item corpus" by Laksh Goyal, CC BY 4.0.
+  Source: https://github.com/lgoyal6/actiongate
+
+16 hand-written labelled meetings, 80 action items. Every meeting is invented;
+none is a transcript of a real conversation, and no real person, company or
+customer record appears in them. You may copy, redistribute, remix and build on
+these files for any purpose, including commercially, provided you give
+attribution.
+
+The payload shape follows Circleback's published webhook schema, read
+2026-08-14. That schema is Circleback's; the contents of these files are mine.

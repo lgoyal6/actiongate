@@ -81,6 +81,36 @@ after signing, processes a correctly signed request, shows the review queue, has
 human approve an item, verifies the audit chain, tampers with the log and shows the
 chain break, then prints the evaluation.
 
+## The pipeline
+
+The order is the whole design: the gate decision is logged *before* any write
+happens, so a crash between the two is visible as a decision with no matching
+write rather than as a silent gap.
+
+```mermaid
+flowchart TD
+  WH["Circleback webhook<br/>raw request bytes"] --> SIG{"HMAC-SHA256 over<br/>the RAW bytes<br/>constant-time compare"}
+  SIG -->|"mismatch"| R401["401, nothing logged as accepted"]
+  SIG -->|"ok"| LOG1[["audit: received<br/>hash of body only, no meeting text"]]
+  LOG1 --> SCH["schema.py<br/>payload to typed Meeting"]
+  SCH --> FEAT["features.py<br/>9 features per action item"]
+  FEAT --> SCORE["classify.py<br/>RuleScorer, logistic"]
+  SCORE --> GATE{"gate.py<br/>confidence >= 0.65 ?"}
+  GATE --> LOG2[["audit: decision<br/>score, policy id, evidence"]]
+  LOG2 -->|"at or above"| CRM["CRM write"]
+  LOG2 -->|"below"| Q["review queue<br/>human approves or rejects"]
+  CRM --> LOG3[["audit: write"]]
+  Q -->|"approved"| CRM
+
+  style SIG fill:#1f6feb,color:#fff
+  style GATE fill:#1f6feb,color:#fff
+  style R401 fill:#b62324,color:#fff
+```
+
+Every box marked as an audit step appends to a hash-chained log, so `verify_chain`
+can name the exact record that was tampered with rather than just reporting that
+the file changed.
+
 ## What is in here
 
 | file | what it does |

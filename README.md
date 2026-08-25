@@ -68,12 +68,13 @@ taken from that page, not invented.
 Python 3.12, standard library only. No models are downloaded and nothing calls out
 to the network.
 
+`actiongate` is itself the package directory, so run these from the directory
+that *contains* the clone, not from inside it.
+
 ```bash
-cd outputs/builds/circleback
-uv venv --python 3.12 work/.venv          # already created if you ran the build
-./work/.venv/bin/python -m actiongate.tests.test_actiongate   # 24 tests
-./actiongate/demo.sh                                          # full walkthrough
-./work/.venv/bin/python -m actiongate.cli eval                # precision/recall
+python3 -m actiongate.tests.test_actiongate   # 24 tests
+./actiongate/demo.sh                          # full walkthrough
+python3 -m actiongate.cli eval                # precision/recall
 ```
 
 `demo.sh` starts the receiver, refuses a forged signature, refuses a body edited
@@ -162,8 +163,8 @@ Two bands, nothing silently discarded:
 
 0.65 was chosen on the dev split by minimising `k * (wrong CRM writes) + (items sent
 to review)` with `k = 20`, i.e. one wrong row in a customer record is priced at
-twenty human reviews. The choice is stable for any `k` between 5 and 100. See
-`../RESULTS.md`.
+twenty human reviews. The choice is stable for any `k` between 5 and 100, and
+`actiongate.cli eval` prints that whole sweep.
 
 ## Audit log
 

@@ -11,7 +11,22 @@
 </head>
 <body>
 
-<header class="gut">
+<nav class="topbar">
+  <a class="brand" href="https://lakshgoyal.com">Laksh Goyal<span>.</span></a>
+  <div class="navlinks">
+    <a href="https://github.com/lgoyal6/actiongate">GitHub</a>
+    <a href="https://www.linkedin.com/in/lakshgoyal">LinkedIn</a>
+  </div>
+</nav>
+<nav class="tabs" aria-label="Sections">
+    <a href="#sec-home">Home</a>
+    <a href="#sec-try">Try it</a>
+    <a href="#sec-threshold">Threshold</a>
+    <a href="#sec-ratio">Cost ratio</a>
+    <a href="#sec-limits">Limits</a>
+</nav>
+
+<header id="sec-home" class="gut">
   <div>
     <div class="eyebrow">lgoyal6 / actiongate</div>
     <h1>actiongate<span class="dot">.</span></h1>
@@ -35,13 +50,13 @@
   </dl>
 </header>
 
-<section class="gut">
+<section class="gut" id="sec-try">
   <div class="eyebrow">Try it</div>
-  <h2>Score an action item against a transcript</h2>
+  <h2>Paste a meeting transcript. Watch the gate decide.</h2>
   <p class="lead">
-    This runs the repository's scorer in your tab: the same nine features and the same
-    fitted weights that produced the curve below. Write a transcript, write the action item
-    an extractor claims came out of it, and see whether the gate would let it through.
+    Two boxes. In the first, a few lines of a meeting. In the second, the action item an
+    extractor claims came out of it. The repository's scorer runs in your tab and tells you
+    whether that would be written into a CRM without a person seeing it.
   </p>
 
   <div class="figure">
@@ -54,12 +69,17 @@
       <div class="pick" id="examples" role="group" aria-label="Example transcripts"></div>
     </div>
     <div class="lead-form">
-      <label>Transcript, one line per turn as <code>Speaker: what they said</code>
-        <textarea id="f-tx" rows="6" spellcheck="false"></textarea></label>
+      <label><span class="step">1</span> The transcript &mdash; type or paste, one line per turn,
+        as <code>Speaker: what they said</code>
+        <textarea id="f-tx" rows="6" spellcheck="false"
+          placeholder="Omar: Where did we land on the Kestrel paperwork?&#10;Dana: I'll send the signed contract over by Friday."></textarea></label>
       <div class="row2">
-        <label>The action item an extractor produced<input id="f-title" spellcheck="false"></label>
-        <label>Assigned to<input id="f-assignee" spellcheck="false"></label>
+        <label><span class="step">2</span> The action item somebody extracted from it
+          <input id="f-title" spellcheck="false" placeholder="Send the signed contract to Kestrel by Friday"></label>
+        <label>Assigned to<input id="f-assignee" spellcheck="false" placeholder="Dana"></label>
       </div>
+      <p class="hint">Edit either box and the score below moves as you type. The buttons above
+        load transcripts worth trying.</p>
     </div>
     <dl class="readout">
       <div><dt>confidence</dt><dd id="s-conf">-</dd></div>
@@ -102,7 +122,7 @@
   </div>
 </section>
 
-<section class="gut">
+<section class="gut" id="sec-threshold">
   <div class="eyebrow">Figure 1</div>
   <h2>What the gate stops, and what it costs you</h2>
   <p class="lead">
@@ -161,7 +181,7 @@
   </div>
 </section>
 
-<section class="gut">
+<section class="gut" id="sec-ratio">
   <div class="eyebrow">Figure 2</div>
   <h2>Does the threshold need retuning for your business</h2>
   <p class="lead">
@@ -202,7 +222,7 @@
   </div>
 </section>
 
-<section class="gut">
+<section class="gut" id="sec-limits">
   <div class="eyebrow">Figure 3</div>
   <h2>Where it loses</h2>
   <ul class="map">
@@ -247,5 +267,6 @@
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 <script src="app.js"></script>
+<script src="nav.js"></script>
 </body>
 </html>

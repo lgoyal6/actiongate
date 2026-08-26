@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>actiongate - the wrong writes a confidence gate stops</title>
+<meta name="description" content="Writing every extracted action item puts 18 wrong ones into the CRM out of 40. Gating at 0.65 cuts that to 2 while still auto-committing 19 of the 22 genuine ones.">
+<meta property="og:title" content="actiongate">
+<meta property="og:description" content="Drag the confidence threshold and watch wrong CRM writes trade against auto-commits. The threshold is derived, not guessed.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="gut">
+  <div>
+    <div class="eyebrow">lgoyal6 / actiongate</div>
+    <h1>actiongate<span class="dot">.</span></h1>
+    <p class="thesis">
+      A model reading a meeting transcript will confidently produce an action item from
+      someone hedging, from a conditional that never fired, or from something a speaker
+      retracted a minute later. Written straight into a CRM, that becomes a wrong
+      conversation with a customer.
+    </p>
+    <p class="thesis">
+      <strong>A missing action item is annoying; an invented one is expensive.</strong>
+      Those costs are not symmetric, and writing everything you extract treats them as if
+      they were. This scores each item and only auto-commits the confident ones.
+    </p>
+  </div>
+  <dl class="facts">
+    <div class="fact"><dt>writing everything</dt><dd>18 <small>wrong writes, of 40</small></dd></div>
+    <div class="fact"><dt>gating at 0.65</dt><dd>2 <small>wrong writes</small></dd></div>
+    <div class="fact"><dt>still auto-committed</dt><dd>19 of 22 <small>genuine items</small></dd></div>
+    <div class="fact"><dt>threshold chosen</dt><dd>0.65 <small>on dev, held from 5 to 100</small></dd></div>
+  </dl>
+</header>
+
+<section class="gut">
+  <div class="eyebrow">Figure 1</div>
+  <h2>What the gate stops, and what it costs you</h2>
+  <p class="lead">
+    Every item above the threshold is written to the CRM without a human. Everything below
+    goes to a review queue. Moving the threshold trades wrong writes against work saved,
+    and there is no setting that does both.
+  </p>
+
+  <div class="figure">
+    <div class="figcap">
+      <span id="cap-what">Loading</span>
+      <span id="cap-split"></span>
+    </div>
+    <div class="toolbar">
+      <span class="picklabel">Split</span>
+      <div class="pick" id="splits" role="group" aria-label="Split"></div>
+      <div class="scrub">
+        <span class="picklabel">Threshold</span>
+        <input type="range" id="thr" min="0" max="20" value="13" step="1">
+      </div>
+    </div>
+    <canvas class="plot" id="plot" width="1200" height="360"></canvas>
+    <dl class="readout">
+      <div><dt>threshold</dt><dd id="r-thr">-</dd></div>
+      <div><dt>wrong writes</dt><dd id="r-fp">-</dd></div>
+      <div><dt>auto-committed</dt><dd id="r-tp">-</dd></div>
+      <div><dt>sent to review</dt><dd id="r-rev">-</dd></div>
+      <div><dt>precision</dt><dd id="r-prec">-</dd></div>
+    </dl>
+    <div class="banner" id="banner">Loading.</div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h3>Why the trade is worth making here</h3>
+      <p>
+        Writing everything puts <strong>18 wrong action items</strong> into the CRM. The
+        gate cuts that to <strong>2</strong> and gives up three auto-commits to do it. Those
+        three are not lost work; they become rows in a review queue that someone clears.
+      </p>
+      <p>
+        <strong>The threshold is derived, not guessed.</strong> It minimises a cost that
+        counts a bad write as twenty queue rows, computed on the dev split and then read off
+        the held-out one. Choosing it on the split you report would be the obvious way to
+        get a better number and a worse system.
+      </p>
+    </div>
+    <dl class="takeaway">
+      <dt>the asymmetry</dt>
+      <dd>A bad write costs about 20 reviews.<small>That ratio is the whole design.</small></dd>
+      <dt>what it buys</dt>
+      <dd>89% of the damage removed.<small>18 wrong writes down to 2.</small></dd>
+      <dt>what it costs</dt>
+      <dd>Three auto-commits.<small>Which become queue rows, not losses.</small></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="gut">
+  <div class="eyebrow">Figure 2</div>
+  <h2>Does the threshold need retuning for your business</h2>
+  <p class="lead">
+    The cost ratio is the one number a team would have to supply: how many review-queue
+    rows a single wrong CRM write is worth. If the chosen threshold moved every time that
+    guess moved, it would not be much of a design.
+  </p>
+  <div class="figure">
+    <div class="figcap">
+      <span>threshold chosen on the dev split</span>
+      <span id="cap-ratio"></span>
+    </div>
+    <div class="grid-wrap"><table class="data" id="ratios"></table></div>
+    <div class="banner" id="ratio-banner"></div>
+  </div>
+
+  <div class="split">
+    <div>
+      <p>
+        <strong>From 5 to 100 it does not move.</strong> Whether a bad write is worth five
+        queue rows or a hundred, the same threshold comes out, so a team adopting this does
+        not have to get that estimate right to get the benefit.
+      </p>
+      <p>
+        At a ratio of 1 it correctly collapses to zero. If a wrong write really costs the
+        same as a review, there is no reason to gate at all, and the chooser says so rather
+        than defending the gate it was built for.
+      </p>
+    </div>
+    <dl class="takeaway">
+      <dt>stable</dt>
+      <dd>0.65, from 5 to 100.<small>The estimate does not have to be right.</small></dd>
+      <dt>and it degrades sensibly</dt>
+      <dd>At a ratio of 1, no gate.<small>Which is the correct answer there.</small></dd>
+      <dt>chosen where</dt>
+      <dd>On dev, read off test.<small>Never on the split being reported.</small></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="gut">
+  <div class="eyebrow">Figure 3</div>
+  <h2>Where it loses</h2>
+  <ul class="map">
+    <li>
+      <b>Forty action items across eight meetings.</b> That is a small held-out split, and
+      every count on this page is a whole number out of it. Two wrong writes against
+      eighteen is a real difference; two against three would not be.
+      <span class="where">data/test.json</span>
+    </li>
+    <li>
+      <b>The transcripts are written, not recorded.</b> The corpus is constructed to contain
+      the failure modes being gated against: hedges, conditionals, retractions. That makes
+      the features findable and it is not a sample of real meetings.
+      <span class="where">corpus.py</span>
+    </li>
+    <li>
+      <b>Nine hand-chosen features and a logistic model.</b> Deliberately small enough to
+      read the weights and argue with them, which is also the ceiling. Nothing here reads
+      the transcript the way a model would.
+      <span class="where">weights.json</span>
+    </li>
+    <li>
+      <b>The cost ratio is an input, not a measurement.</b> Twenty is a stated assumption
+      about a customer relationship, not something derived from data. The sensitivity table
+      exists because that number is a guess.
+      <span class="where">evaluate.py</span>
+    </li>
+  </ul>
+</section>
+
+<footer class="gut">
+  <span>
+    <a href="https://github.com/lgoyal6/actiongate">github.com/lgoyal6/actiongate</a>
+    &middot; MIT
+  </span>
+  <span>
+    also: <a href="https://lgoyal6.github.io/icp-benchmark/">icp-benchmark</a>
+    &middot; <a href="https://lgoyal6.github.io/promptgate/">promptgate</a>
+    &middot; <a href="https://lgoyal6.github.io/flightrisk/">flightrisk</a>
+  </span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

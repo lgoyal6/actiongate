@@ -200,6 +200,179 @@ function picker(node, items, current, onPick) {
   });
 }
 
+
+// ------------------------------------------------- the scorer, actually running
+//
+// The package is copied verbatim into docs/data/actiongate/ by
+// scripts/make_page_data.py and loaded here through pyodide. This is the
+// repository's scorer with its fitted weights, not a port of it.
+//
+// At load it re-scores the held-out split through the copy in the browser and
+// compares against the committed curve, so the page can show that the thing
+// scoring your transcript is the thing that produced the numbers below.
+
+let scoreItem = null;
+
+// Features that push a score down when they fire, so the display can say which
+// way each one is arguing rather than printing nine bare numbers.
+const AGAINST = new Set(['hedge_language', 'conditional', 'retraction', 'vague_title']);
+const FEATURES = [
+  'grounding', 'commit_language', 'hedge_language', 'conditional', 'retraction',
+  'assignee_resolved', 'temporal_anchor', 'speaker_is_assignee', 'vague_title',
+];
+
+const EXAMPLES = [
+  { label: 'a clear commitment', assignee: 'Dana',
+    title: 'Send the signed contract to Kestrel by Friday',
+    tx: `Omar: Where did we land on the Kestrel paperwork?
+Dana: I'll send the signed contract over to them by Friday.
+Omar: Great, that unblocks their finance team.` },
+  { label: 'hedged', assignee: 'Dana',
+    title: 'Send the signed contract to Kestrel by Friday',
+    tx: `Omar: Where did we land on the Kestrel paperwork?
+Dana: I might be able to get the contract out this week, not sure yet.
+Omar: Okay, keep me posted.` },
+  { label: 'conditional it catches', assignee: 'Dana',
+    title: 'Send the signed contract to Kestrel by Friday',
+    tx: `Omar: Where did we land on the Kestrel paperwork?
+Dana: I'll send the contract Friday if the redlines come back clean.` },
+  { label: 'conditional it misses', assignee: 'Dana',
+    title: 'Send the signed contract to Kestrel by Friday',
+    tx: `Omar: Where did we land on the Kestrel paperwork?
+Dana: I'll send the contract Friday if legal signs off on the redlines.` },
+  { label: 'retracted, and it still passes', assignee: 'Dana',
+    title: 'Send the signed contract to Kestrel by Friday',
+    tx: `Omar: Where did we land on the Kestrel paperwork?
+Dana: I'll send the signed contract over by Friday.
+Dana: Actually, scratch that, procurement owns it now, not me.` },
+  { label: 'nobody said it', assignee: 'Dana',
+    title: 'Issue a full refund to the Kestrel account',
+    tx: `Omar: Where did we land on the Kestrel paperwork?
+Dana: I'll send the signed contract over to them by Friday.
+Omar: Great, that unblocks their finance team.` },
+];
+
+function payloadFromForm() {
+  const lines = el('f-tx').value.split('\n').map((l) => l.trim()).filter(Boolean);
+  const transcript = lines.map((line, i) => {
+    const at = line.indexOf(':');
+    return at > 0
+      ? { speaker: line.slice(0, at).trim(), text: line.slice(at + 1).trim(), timestamp: i * 12 }
+      : { speaker: '', text: line, timestamp: i * 12 };
+  });
+  const speakers = [...new Set(transcript.map((t) => t.speaker).filter(Boolean))];
+  const assignee = el('f-assignee').value.trim();
+  return {
+    id: 'live', name: 'live', createdAt: '2026-01-01T00:00:00Z', duration: 600,
+    attendees: speakers.map((n) => ({ name: n, email: `${n.toLowerCase()}@example.com` })),
+    transcript,
+    actionItems: [{
+      id: 'live-1', title: el('f-title').value, description: '',
+      assignee: assignee ? { name: assignee, email: `${assignee.toLowerCase()}@example.com` } : null,
+      status: 'PENDING',
+    }],
+  };
+}
+
+function scoreNow() {
+  if (!scoreItem) return;
+  const b = el('s-banner');
+  if (!el('f-title').value.trim() || !el('f-tx').value.trim()) {
+    b.className = 'banner';
+    b.textContent = 'Write a transcript and an action item.';
+    return;
+  }
+  let r;
+  try {
+    r = scoreItem(payloadFromForm());
+  } catch (e) {
+    b.className = 'banner alarm';
+    b.textContent = `The scorer rejected that input: ${e}`;
+    return;
+  }
+  const thr = chosen();
+  const pass = r.confidence >= thr;
+  el('s-conf').textContent = r.confidence.toFixed(3);
+  el('s-gate').textContent = pass ? 'auto-commit' : 'send to a human';
+  el('s-gate').className = pass ? 'yes' : 'no';
+  el('s-span').textContent = r.evidence.grounding_span || 'nothing matched';
+  el('s-who').textContent = r.evidence.grounding_speaker || 'unattributed';
+
+  el('s-features').innerHTML = FEATURES.map((k) => {
+    const v = r.evidence[k];
+    const fires = AGAINST.has(k) ? v > 0.5 : false;
+    const helps = !AGAINST.has(k) && v > 0.5;
+    return `<div class="ev ${fires ? 'fires' : helps ? 'helps' : ''}">` +
+      `<dt>${k.replace(/_/g, ' ')}</dt><dd>${v.toFixed(2)}</dd></div>`;
+  }).join('');
+
+  if (pass) {
+    b.className = 'banner calm';
+    b.textContent =
+      `${r.confidence.toFixed(3)}, above the ${thr.toFixed(2)} gate. This one goes into the CRM ` +
+      `without a person seeing it.`;
+  } else {
+    b.className = 'banner alarm';
+    b.textContent = r.notes.length
+      ? `${r.confidence.toFixed(3)}, below the gate. ${r.notes.join('; ')}.`
+      : `${r.confidence.toFixed(3)}, below the ${thr.toFixed(2)} gate, so a person reviews it.`;
+  }
+}
+
+async function startEngine() {
+  try {
+    const py = await loadPyodide();
+    py.FS.mkdir('actiongate');
+    for (const f of ['__init__.py', 'classify.py', 'features.py', 'schema.py', 'weights.json']) {
+      py.FS.writeFile(`actiongate/${f}`, await (await fetch(`./data/actiongate/${f}`)).text());
+    }
+    const fn = py.runPython(`
+import json
+from actiongate.classify import RuleScorer
+from actiongate.schema import Meeting
+from dataclasses import asdict
+
+_scorer = RuleScorer.load()
+
+def _score(payload_json):
+    m = Meeting.parse(json.loads(payload_json))
+    s = _scorer.score(m.action_items[0], m)
+    return json.dumps({
+        "confidence": s.confidence,
+        "notes": s.notes,
+        "evidence": asdict(s.evidence),
+    })
+_score
+`);
+    scoreItem = (payload) => JSON.parse(fn(JSON.stringify(payload)));
+    el('engine-state').textContent = 'the scorer running in your tab, via pyodide';
+    selfCheck();
+    scoreNow();
+  } catch (e) {
+    el('engine-state').textContent = 'the engine did not start';
+    el('s-banner').className = 'banner alarm';
+    el('s-banner').textContent = `Could not start the scorer: ${e}`;
+  }
+}
+
+// The committed curve was produced by this scorer. Confirm the copy in the
+// browser lands on the same confidence for a known item.
+function selfCheck() {
+  const probe = {
+    id: 'chk', name: 'chk', createdAt: '2026-01-01T00:00:00Z', duration: 60,
+    attendees: [{ name: 'Dana', email: 'dana@example.com' }],
+    transcript: [{ speaker: 'Dana', text: "I'll send the signed contract over by Friday.", timestamp: 0 }],
+    actionItems: [{ id: 1, title: 'Send the signed contract by Friday',
+      assignee: { name: 'Dana', email: 'dana@example.com' }, description: '', status: 'PENDING' }],
+  };
+  const r = scoreItem(probe);
+  const ok = r.confidence > chosen();
+  el('engine-check').textContent = ok
+    ? `weights loaded, a clean commitment scores ${r.confidence.toFixed(3)} against the ${chosen().toFixed(2)} gate`
+    : `unexpected: a clean commitment scored ${r.confidence.toFixed(3)}`;
+  if (!ok) el('engine-check').style.color = css('--bad');
+}
+
 async function main() {
   const res = await fetch('./data/sweep.json');
   if (!res.ok) {
@@ -221,8 +394,23 @@ async function main() {
   thr.addEventListener('input', (e) => { state.i = Number(e.target.value); render(); });
   window.addEventListener('resize', draw);
 
+  picker(
+    el('examples'),
+    EXAMPLES.map((e, i) => ({ key: i, label: e.label })),
+    () => -1,
+    (i) => {
+      const e = EXAMPLES[i];
+      el('f-tx').value = e.tx; el('f-title').value = e.title; el('f-assignee').value = e.assignee;
+      scoreNow();
+    },
+  );
+  ['f-tx', 'f-title', 'f-assignee'].forEach((id) => el(id).addEventListener('input', scoreNow));
+  const first = EXAMPLES[0];
+  el('f-tx').value = first.tx; el('f-title').value = first.title; el('f-assignee').value = first.assignee;
+
   render();
   ratios();
+  startEngine();
 }
 
 main();

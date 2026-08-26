@@ -36,6 +36,73 @@
 </header>
 
 <section class="gut">
+  <div class="eyebrow">Try it</div>
+  <h2>Score an action item against a transcript</h2>
+  <p class="lead">
+    This runs the repository's scorer in your tab: the same nine features and the same
+    fitted weights that produced the curve below. Write a transcript, write the action item
+    an extractor claims came out of it, and see whether the gate would let it through.
+  </p>
+
+  <div class="figure">
+    <div class="figcap">
+      <span id="engine-state">starting the engine</span>
+      <span id="engine-check">checking it against the held-out split</span>
+    </div>
+    <div class="toolbar">
+      <span class="picklabel">Or load one</span>
+      <div class="pick" id="examples" role="group" aria-label="Example transcripts"></div>
+    </div>
+    <div class="lead-form">
+      <label>Transcript, one line per turn as <code>Speaker: what they said</code>
+        <textarea id="f-tx" rows="6" spellcheck="false"></textarea></label>
+      <div class="row2">
+        <label>The action item an extractor produced<input id="f-title" spellcheck="false"></label>
+        <label>Assigned to<input id="f-assignee" spellcheck="false"></label>
+      </div>
+    </div>
+    <dl class="readout">
+      <div><dt>confidence</dt><dd id="s-conf">-</dd></div>
+      <div><dt>gate at 0.65</dt><dd id="s-gate">-</dd></div>
+      <div><dt>grounded in</dt><dd id="s-span" class="small">-</dd></div>
+      <div><dt>said by</dt><dd id="s-who" class="small">-</dd></div>
+    </dl>
+    <div class="evidence" id="s-features"></div>
+    <div class="banner" id="s-banner">Write a transcript and an action item.</div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h3>Two places it comes apart</h3>
+      <p>
+        <strong>The conditional feature is a keyword list.</strong> "I'll send the contract
+        Friday if the redlines come back clean" trips it and drops to 0.617, which queues
+        it. "if legal signs off" means the same thing, is not on the list, and scores
+        <strong>0.938</strong>. Same commitment, one word apart, opposite decision.
+      </p>
+      <p>
+        <strong>A retraction fires and the gate lets it through anyway.</strong> Say you
+        will send it, then say "scratch that". The retraction feature correctly reads 1.0,
+        and strong grounding, commit language and a date still carry the score to
+        <strong>0.861</strong>. Detecting the retraction is not the same as acting on it,
+        and the fitted weight is not large enough to.
+      </p>
+      <p>
+        Grounding is the part that works. Write an action item about something nobody said
+        and the best-matching span is unrelated, grounding collapses, and it is queued.
+      </p>
+    <dl class="takeaway">
+      <dt>works</dt>
+      <dd>Grounding.<small>An invented item scores 0.122 and is queued.</small></dd>
+      <dt>brittle</dt>
+      <dd>Conditional, a keyword list.<small>0.617 or 0.938 on one word.</small></dd>
+      <dt>fires and is ignored</dt>
+      <dd>Retraction.<small>Reads 1.0, still auto-commits at 0.861.</small></dd>
+    </dl>
+  </div>
+</section>
+
+<section class="gut">
   <div class="eyebrow">Figure 1</div>
   <h2>What the gate stops, and what it costs you</h2>
   <p class="lead">
@@ -178,6 +245,7 @@
   </span>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

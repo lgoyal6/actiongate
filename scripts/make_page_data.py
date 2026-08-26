@@ -49,7 +49,15 @@ def main() -> None:
         "default_cost_ratio": COST_RATIO_K,
         "scorer_id": scorer.scorer_id,
     }
+    # The page runs the scorer itself, in pyodide, on a transcript a reader
+    # types. These are copied verbatim rather than ported, so what scores your
+    # input is what produced the sweep above.
     OUT.mkdir(parents=True, exist_ok=True)
+    pkg = OUT / "actiongate"
+    pkg.mkdir(exist_ok=True)
+    for name in ("__init__.py", "classify.py", "features.py", "schema.py", "weights.json"):
+        (pkg / name).write_text((ROOT / name).read_text())
+
     path = OUT / "sweep.json"
     path.write_text(json.dumps(payload, separators=(",", ":")) + "\n")
     print(f"{path.relative_to(ROOT)}  {path.stat().st_size / 1024:.1f} kB")

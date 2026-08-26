@@ -142,3 +142,28 @@ footer {
 table.data td.num { font-variant-numeric: tabular-nums; }
 table.data tr.chosen td { color: var(--ink); }
 table.data tr.chosen td:first-child { border-left: 3px solid var(--ox); padding-left: 8px; }
+
+/* The transcript form and the nine features it produces. */
+.lead-form { padding: 14px; border-top: 1px solid var(--hair); display: grid; gap: 12px; }
+.lead-form label { display: block; font: 11px/1.6 var(--mono); letter-spacing: .1em;
+  text-transform: uppercase; color: var(--faint); }
+.lead-form code { text-transform: none; letter-spacing: 0; }
+.lead-form input, .lead-form textarea {
+  display: block; width: 100%; margin-top: 5px; background: var(--paper); color: var(--ink);
+  border: 1px solid var(--hair); padding: 9px 11px; font: 15px/1.55 var(--serif);
+  text-transform: none; letter-spacing: 0; resize: vertical;
+}
+.lead-form textarea { font: 13px/1.7 var(--mono); }
+.lead-form input:focus, .lead-form textarea:focus { outline: 2px solid var(--ox); outline-offset: -2px; }
+.row2 { display: grid; grid-template-columns: minmax(0,3fr) minmax(0,1fr); gap: 12px; }
+@media (max-width: 700px) { .row2 { grid-template-columns: minmax(0,1fr); } }
+
+.evidence { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  border-top: 1px solid var(--hair); }
+.ev { padding: 9px 12px; border-right: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+.ev dt { font: 10px/1.5 var(--mono); letter-spacing: .09em; text-transform: uppercase; color: var(--faint); }
+.ev dd { font-size: 17px; font-variant-numeric: tabular-nums; }
+.ev.fires dd { color: var(--bad); }
+.ev.helps dd { color: var(--ok); }
+.readout dd.yes { color: var(--ok); }
+.readout dd.no { color: var(--bad); }

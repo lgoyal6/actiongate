@@ -11,6 +11,9 @@ should gate on confidence rather than write everything it extracts.
 
 ---
 
+**[See it: lgoyal6.github.io/actiongate](https://lgoyal6.github.io/actiongate/)** - drag the
+threshold and watch wrong CRM writes trade against auto-commits.
+
 ## The short version
 
 **What I noticed.** Circleback's automations write extracted action items straight into

@@ -64,7 +64,7 @@ function draw() {
     ctx.fillStyle = css('--faint');
     ctx.fillText(String(v), pad.l - 8, Y(v) + 3);
     if (v) {
-      ctx.strokeStyle = '#e8e3d6';
+      ctx.strokeStyle = css('--grid');
       ctx.beginPath(); ctx.moveTo(pad.l, Y(v)); ctx.lineTo(pad.l + iw, Y(v)); ctx.stroke();
     }
   }

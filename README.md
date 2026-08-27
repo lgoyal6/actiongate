@@ -1,3 +1,10 @@
+<a href="https://lgoyal6.github.io/actiongate/">
+  <img alt="actiongate - open the live demo" src="docs/og.png">
+</a>
+
+**[Open the live demo](https://lgoyal6.github.io/actiongate/)** - Drag the
+threshold and watch wrong CRM writes trade against auto-commits.
+
 # ActionGate
 
 A confidence gate that sits between a Circleback webhook and a CRM write.
@@ -10,9 +17,6 @@ item in a customer record is more expensive than a missing one, so the system
 should gate on confidence rather than write everything it extracts.
 
 ---
-
-**[See it: lgoyal6.github.io/actiongate](https://lgoyal6.github.io/actiongate/)** - drag the
-threshold and watch wrong CRM writes trade against auto-commits.
 
 ## The short version
 
